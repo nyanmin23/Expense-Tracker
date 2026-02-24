@@ -1,0 +1,10 @@
+services:
+  db:
+    image: 'mysql:9.0'
+    environment:
+      - 'MYSQL_DATABASE=expense_db'
+      - 'MYSQL_USER=nyanminhtet'
+      - 'MYSQL_PASSWORD=r00tme'
+      - 'MYSQL_ROOT_PASSWORD=""'
+    ports:
+      - '3306:3306'
