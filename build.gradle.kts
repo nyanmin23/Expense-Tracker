@@ -25,31 +25,32 @@ repositories {
 }
 
 dependencies {
-    // 1. Core Logic & Persistence
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-webmvc")
+    // Core Logic & Persistence
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.mapstruct:mapstruct:1.6.3")
 
-    // 2. Database & Migration
+    // Database & Migration
+    implementation("org.springframework.boot:spring-boot-flyway")
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-mysql")
     runtimeOnly("com.mysql:mysql-connector-j")
 
-    // 3. Security
-    implementation("org.springframework.boot:spring-boot-starter-security-oauth2-resource-server")
+    // Security
+//    implementation("org.springframework.boot:spring-boot-starter-security-oauth2-resource-server")
 
-    // 4. Infrastructure & Dev Tools
+    // Infrastructure & Dev Tools
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 
-    // 5. Annotation Processors (Lombok + MapStruct)
+    // Annotation Processors (Lombok + MapStruct)
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
     annotationProcessor("org.projectlombok:lombok-mapstruct-binding:0.2.0")
 
-    // 6. Testing (Consolidated for Spring Boot 4.x)
+    // Testing (Consolidated for Spring Boot 4.x)
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
