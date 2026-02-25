@@ -1,12 +1,15 @@
 package dev.jade.expensetracker.domain.expense;
 
 import dev.jade.expensetracker.domain.expense.dto.ExpenseRequest;
+import dev.jade.expensetracker.domain.expense.dto.ExpenseResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PagedModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,10 +39,10 @@ public class ExpenseController {
     }
 
     @PostMapping
-    private ResponseEntity<String> createExpense(@RequestBody ExpenseRequest expenseRequest) {
-
-        return ResponseEntity.ok("Hello");
+    private ResponseEntity<ExpenseResponse> addNewExpense(
+            @Valid @RequestBody ExpenseRequest expenseRequest) {
+        ExpenseResponse newExpense = expenseService.createExpense(expenseRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newExpense);
     }
-
 }
 
