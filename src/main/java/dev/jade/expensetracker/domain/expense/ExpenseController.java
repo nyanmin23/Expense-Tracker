@@ -40,9 +40,23 @@ public class ExpenseController {
 
     @PostMapping
     private ResponseEntity<ExpenseResponse> addNewExpense(
-            @Valid @RequestBody ExpenseRequest expenseRequest) {
-        ExpenseResponse newExpense = expenseService.createExpense(expenseRequest);
+            @Valid @RequestBody ExpenseRequest request) {
+        ExpenseResponse newExpense = expenseService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(newExpense);
+    }
+
+    @PatchMapping("/{expenseId}")
+    private ResponseEntity<ExpenseResponse> editExpense(
+            @PathVariable Long expenseId,
+            @Valid @RequestBody ExpenseRequest request) {
+        return ResponseEntity.ok(expenseService.update(expenseId, request));
+    }
+
+    @DeleteMapping("/{expenseId}")
+    private ResponseEntity<Void> deleteExpense(
+            @PathVariable Long expenseId) {
+        expenseService.delete(expenseId);
+        return ResponseEntity.noContent().build();
     }
 }
 

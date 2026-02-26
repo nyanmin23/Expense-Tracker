@@ -24,13 +24,33 @@ public class ExpenseService {
     }
 
     @Transactional
-    public ExpenseResponse createExpense(ExpenseRequest expenseRequest) {
+    public ExpenseResponse create(ExpenseRequest request) {
 
-        User user = userRepository.findById(expenseRequest.userId())
+        User user = userRepository.findById(request.userId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
-        Expense createdExpense = mapper.toEntity(expenseRequest);
+        Expense createdExpense = mapper.toEntity(request);
         createdExpense.setUser(user);
+
         return mapper.toResponse(expenseRepository.save(createdExpense));
+    }
+
+    @Transactional
+    public ExpenseResponse update(Long expenseId, ExpenseRequest request) {
+
+        Expense updatedExpense = expenseRepository
+                .findById(expenseId)
+                .orElseThrow(() -> new RuntimeException("Expense not found with id: " + expenseId));
+
+        mapper.updateEntityFromRequest(request, updatedExpense);
+        return mapper.toResponse(expenseRepository.save(updatedExpense));
+    }
+
+    @Transactional
+    public void delete(Long expenseId) {
+
+        if (!expenseRepository.existsById(expenseId)) {
+            throw new RuntimeException("Expense with ID " + expenseId + " not found");
+        }
+        expenseRepository.deleteById(expenseId);
     }
 }
