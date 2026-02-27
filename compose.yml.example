@@ -1,0 +1,10 @@
+services:
+  db:
+    image: 'mysql:version_number'
+    environment:
+      - 'MYSQL_DATABASE=your_db_name'
+      - 'MYSQL_USER=your_username'
+      - 'MYSQL_PASSWORD=your_password'
+      - 'MYSQL_ALLOW_EMPTY_PASSWORD=true'
+    ports:
+      - '[port]:[port]'
