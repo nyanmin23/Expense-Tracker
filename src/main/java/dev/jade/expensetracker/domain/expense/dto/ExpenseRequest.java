@@ -8,9 +8,6 @@ import java.time.LocalDate;
 
 public record ExpenseRequest(
 
-        @NotNull(message = "User ID is required")
-        Long userId,
-
         @NotBlank(message = "Description is required")
         @Size(min = 3, max = 255, message = "Description must be between 3 and 255 characters")
         String description,

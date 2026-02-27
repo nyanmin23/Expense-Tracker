@@ -1,10 +1,10 @@
 package dev.jade.expensetracker.domain.expense;
 
+import dev.jade.expensetracker.domain.expense.dto.ExpensePatchRequest;
 import dev.jade.expensetracker.domain.expense.dto.ExpenseRequest;
 import dev.jade.expensetracker.domain.expense.dto.ExpenseResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,7 +21,7 @@ public class ExpenseController {
     private final ExpenseService expenseService;
 
     @GetMapping
-    private PagedModel<Expense> getAllExpenses(
+    public PagedModel<ExpenseResponse> getAllExpenses(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
             @RequestParam(name = "sort", defaultValue = "entryDate") String field,
@@ -33,27 +33,24 @@ public class ExpenseController {
                 Sort.by(field).ascending();
 
         Pageable pageable = PageRequest.of(page, size, sortOrder);
-        Page<Expense> expenses = expenseService.findAll(pageable);
-
-        return new PagedModel<>(expenses);
+        return new PagedModel<>(expenseService.findAll(pageable));
     }
 
     @PostMapping
-    private ResponseEntity<ExpenseResponse> addNewExpense(
+    public ResponseEntity<ExpenseResponse> addNewExpense(
             @Valid @RequestBody ExpenseRequest request) {
-        ExpenseResponse newExpense = expenseService.create(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newExpense);
+        return ResponseEntity.status(HttpStatus.CREATED).body(expenseService.create(request));
     }
 
     @PatchMapping("/{expenseId}")
-    private ResponseEntity<ExpenseResponse> editExpense(
+    public ResponseEntity<ExpenseResponse> editExpense(
             @PathVariable Long expenseId,
-            @Valid @RequestBody ExpenseRequest request) {
-        return ResponseEntity.ok(expenseService.update(expenseId, request));
+            @Valid @RequestBody ExpensePatchRequest patch) {
+        return ResponseEntity.ok(expenseService.update(expenseId, patch));
     }
 
     @DeleteMapping("/{expenseId}")
-    private ResponseEntity<Void> deleteExpense(
+    public ResponseEntity<Void> deleteExpense(
             @PathVariable Long expenseId) {
         expenseService.delete(expenseId);
         return ResponseEntity.noContent().build();

@@ -1,6 +1,7 @@
 package dev.jade.expensetracker.domain.expense;
 
 import dev.jade.expensetracker.config.MapStructConfig;
+import dev.jade.expensetracker.domain.expense.dto.ExpensePatchRequest;
 import dev.jade.expensetracker.domain.expense.dto.ExpenseRequest;
 import dev.jade.expensetracker.domain.expense.dto.ExpenseResponse;
 import org.mapstruct.Mapper;
@@ -13,9 +14,9 @@ public interface ExpenseMapper {
     @Mapping(source = "user.userId", target = "userId")
     ExpenseResponse toResponse(Expense expense);
 
-    @Mapping(source = "userId", target = "user.userId")
     Expense toEntity(ExpenseRequest request);
 
-    void updateEntityFromRequest(ExpenseRequest request, @MappingTarget Expense expense);
+    void updateEntityFromRequest(ExpensePatchRequest patch, @MappingTarget Expense expense);
+
 }
 
