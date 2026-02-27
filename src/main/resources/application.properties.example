@@ -1,0 +1,5 @@
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+
+jwt.secret=your_base64_secret
+jwt.expiration=900000
