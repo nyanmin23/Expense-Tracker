@@ -126,6 +126,42 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Exposes the core Spring Security {@code AuthenticationManager} as a bean.
+     *
+     * <p>In Spring Security, the {@code AuthenticationManager} is the central component
+     * responsible for authenticating credentials. It acts as the mechanism invoked by
+     * authentication filters (for example, those handling form login or basic authentication)
+     * to process an {@code Authentication} request, delegate to one or more
+     * {@code AuthenticationProvider} instances, and return a fully authenticated
+     * {@code Authentication} on success. {@code ProviderManager} is the most common
+     * concrete implementation used behind the scenes. {@code AuthenticationManager}
+     * implementations are ultimately responsible for verifying credentials and
+     * populating the {@code SecurityContextHolder} with authentication results. {@code turn0search0}{@code turn0search2}</p>
+     *
+     * <p>Because Spring Security no longer provides the {@code WebSecurityConfigurerAdapter}
+     * by default, the framework auto-configures an {@code AuthenticationManager} based on
+     * beans such as {@code UserDetailsService} and {@code PasswordEncoder}. Those
+     * components are used by the default authentication providers to build the manager.
+     * The {@code AuthenticationConfiguration} class captures that internally built
+     * manager and allows it to be exposed as a bean. Without this explicit bean
+     * declaration, the auto-configured {@code AuthenticationManager} would not be
+     * available for injection into other beans (for example, custom filters or services
+     * that programmatically authenticate credentials).
+     *
+     * <p>In summary, this method fetches the already configured {@code AuthenticationManager}
+     * from Spring Security’s internal configuration and makes it a Spring bean so it can be
+     * injected elsewhere. It does not construct the manager manually, but defers to
+     * {@code AuthenticationConfiguration.getAuthenticationManager()} to return the
+     * correct instance. This pattern replaces the older
+     * {@code authenticationManagerBean()} pattern from the deprecated
+     * {@code WebSecurityConfigurerAdapter}.
+     *
+     * @param config the Spring Security {@code AuthenticationConfiguration} that holds
+     *               the auto-configured {@code AuthenticationManager}
+     * @return the {@code AuthenticationManager} that Spring Security has built
+     * @throws Exception if the {@code AuthenticationManager} cannot be retrieved
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
