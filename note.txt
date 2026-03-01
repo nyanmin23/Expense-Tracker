@@ -1,0 +1,3 @@
+How to setup JwtService: https://medium.com/@sarveshkhamkar321/jwt-part-authentication-in-spring-boot-a-complete-implementation-guide-5a9277d42ed4
+
+How to setup JwtAuthFilter: https://medium.com/@sarveshkhamkar321/part2-understanding-from-request-controller-jwt-authentication-in-spring-boot-4179392e086b?postPublishedType=repub
