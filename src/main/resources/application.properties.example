@@ -1,5 +1,22 @@
+spring.application.name=ExpenseTracker
+
+# Database connection for Flyway to run migrations
+spring.datasource.url=jdbc:mysql://localhost:3306/expense_db?createDatabaseIfNotExist=true
 spring.datasource.username=your_username
 spring.datasource.password=your_password
 
-jwt.secret=your_base64_secret
-jwt.expiration=900000
+# MySQL
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# JPA / Hibernate
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.show-sql=true
+
+# Flyway
+spring.flyway.enabled=true
+spring.flyway.baseline-on-migrate=true
+spring.flyway.locations=classpath:db/migration
+
+# JWT
+jwt.secret=your_base64_encoded_secret_min_32_characters
+jwt.expiration=2592000000
