@@ -8,7 +8,9 @@ public record AuthResponse(
 
         String email,
 
-        Instant createdAt
+        Instant createdAt,
+
+        String token
 
 ) {
 }
