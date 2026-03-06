@@ -28,7 +28,8 @@ public class ExpenseService {
     }
 
     private User getCurrentUser() {
-        return (User) SecurityContextHolder.getContext()
+        return (User) SecurityContextHolder
+                .getContext()
                 .getAuthentication()
                 .getPrincipal();
     }
